@@ -7,6 +7,18 @@ FlatList,
 TouchableOpacity,
 SafeAreaView
 } from 'react-native';
+import { NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// ---TELA DE CONFIGURAÇÕES (A NOVA PÁGINA)---
+function SettingsScreen() {
+return (
+<View style={styles.centerContainer}>
+<Text style={style.header}>Página de Configurações</Text>
+<Text>Aqui você pode ajustar as preferências do app.</Text>
+</View>
+);
+}
 // 1. Dados da nossa lista
 const DATA = [
 { id: '1', title: 'Configurações' },
@@ -20,7 +32,14 @@ export default function App() {
 const renderItem = ({ item }) => (
 <TouchableOpacity
 style={styles.button}
-onPress={() => alert(`Você clicou em: ${item.title}`)}
+onPress={() =>  {
+if (item.id ==='1') {
+// Se for o ID 1, navega para a página de Configurações
+navigation.navigate('Settings');
+} else {
+alert('Você clicou em: ${item.title}');
+}
+}}
 >
 <Text style={styles.buttonText}>{item.title}</Text>
 </TouchableOpacity>
@@ -37,6 +56,15 @@ contentContainerStyle={styles.listPadding}
 </SafeAreaView>
 );
 }
+// --- CONFIGURAÇÃO DO NAVEGADOR ---
+const Stack = createStackNavigator();
+
+export default function App() {
+return (
+<NavigationContainer>
+<Stack.Navigator initialRouteName="Home">
+<Stack.Screen
+name="Home"
 // 3. Estilização básica
 const styles = StyleSheet.create({
 container: {flex: 1,
